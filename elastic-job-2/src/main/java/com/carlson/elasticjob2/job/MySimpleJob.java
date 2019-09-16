@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
         corn = "0/5 * * * * ?",
         shardingTotalCount = 2
 )
-@Component
+//@Component
 public class MySimpleJob implements SimpleJob {
 
     @Override
