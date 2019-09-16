@@ -1,0 +1,4 @@
+elasticjob:
+  zookeeper:
+    serverList: localhost:2181
+    namespace: elastic-job-3
