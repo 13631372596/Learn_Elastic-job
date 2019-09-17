@@ -1,8 +1,4 @@
-spring:
-  datasource:
-    username: xxx
-
 elasticjob:
   zookeeper:
     serverList: localhost:2181
-    namespace: MySimpleJob
+    namespace: elastic-job-2

@@ -1,5 +1,6 @@
 package com.carlson.elasticjob3.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TbOrder {
@@ -19,7 +20,7 @@ public class TbOrder {
      *
      * @mbg.generated Tue Sep 17 00:57:45 GMT+08:00 2019
      */
-    private Long amount;
+    private BigDecimal amount;
 
     /**
      *
@@ -89,7 +90,7 @@ public class TbOrder {
      *
      * @mbg.generated Tue Sep 17 00:57:45 GMT+08:00 2019
      */
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
@@ -101,7 +102,7 @@ public class TbOrder {
      *
      * @mbg.generated Tue Sep 17 00:57:45 GMT+08:00 2019
      */
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

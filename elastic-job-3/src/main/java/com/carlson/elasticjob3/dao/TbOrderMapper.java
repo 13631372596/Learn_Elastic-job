@@ -2,6 +2,8 @@ package com.carlson.elasticjob3.dao;
 
 import com.carlson.elasticjob3.model.TbOrder;
 import com.carlson.elasticjob3.model.TbOrderExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -93,4 +95,6 @@ public interface TbOrderMapper {
      * @mbg.generated Tue Sep 17 00:57:45 GMT+08:00 2019
      */
     int updateByPrimaryKey(TbOrder record);
+
+    List<TbOrder> getOrder(@Param("time") Date time, @Param("shardingTotalCount") int shardingTotalCount, @Param("shardingItem") int shardingItem);
 }

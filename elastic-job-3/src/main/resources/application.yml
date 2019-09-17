@@ -2,3 +2,14 @@ elasticjob:
   zookeeper:
     serverList: localhost:2181
     namespace: elastic-job-3
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/learn_elastic-job?serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: admin
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: /mybatis/*.xml
+

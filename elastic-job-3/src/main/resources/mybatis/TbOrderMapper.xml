@@ -212,6 +212,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="getOrder" resultType="com.carlson.elasticjob3.model.TbOrder">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_order
+    <where>
+      create_time &lt; #{time}
+      and order_status = 1
+      and id % #{shardingTotalCount} = #{shardingItem}
+    </where>
+  </select>
   <update id="updateByExampleSelective" parameterType="map">
     <!--
       WARNING - @mbg.generated
