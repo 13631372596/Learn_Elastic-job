@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.Date;
 
 @ElasticSimpleJob(
-        corn = "0/10 * * * * ?",
+        corn = "0/2 * * * * ?",
         jobName = "ProduceOrderJob",
         shardingTotalCount = 1,
         overwire = true
@@ -27,7 +28,7 @@ public class ProduceOrderJob implements SimpleJob {
 
     @Override
     public void execute(ShardingContext shardingContext) {
-        log.info("ProduceOrderJob.shardingContext.getShardingItem():{}", shardingContext.getShardingItem());
+        log.info(LocalTime.now() + "ProduceOrderJob.shardingContext.getShardingItem():{}", shardingContext.getShardingItem());
         int total = 10;
         for (int i = 0; i < total; i++) {
             TbOrder order = new TbOrder();

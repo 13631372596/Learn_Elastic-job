@@ -1,9 +1,12 @@
 package com.carlson.elasticjob3.config;
 
+import com.carlson.elasticjob3.annotation.ElasticDataflowJob;
 import com.carlson.elasticjob3.annotation.ElasticSimpleJob;
 import com.dangdang.ddframe.job.api.ElasticJob;
+import com.dangdang.ddframe.job.api.dataflow.DataflowJob;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
 import com.dangdang.ddframe.job.config.JobCoreConfiguration;
+import com.dangdang.ddframe.job.config.dataflow.DataflowJobConfiguration;
 import com.dangdang.ddframe.job.config.simple.SimpleJobConfiguration;
 import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
 import com.dangdang.ddframe.job.lite.spring.api.SpringJobScheduler;
@@ -21,7 +24,7 @@ import java.util.Set;
 @Configuration
 @ConditionalOnBean(ZookeeperConfig.class)
 @AutoConfigureAfter(ZookeeperConfig.class)
-public class SimpleJobConfig {
+public class DataflowJobConfig {
 
     @Autowired
     private CoordinatorRegistryCenter coordinatorRegistryCenter;
@@ -31,19 +34,19 @@ public class SimpleJobConfig {
 
     @PostConstruct
     public void initSimpleJob(){
-        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(ElasticSimpleJob.class);
+        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(ElasticDataflowJob.class);
         Set<Map.Entry<String, Object>> entries = beans.entrySet();
         for (Map.Entry<String, Object> entry : entries) {
             Object instance = entry.getValue();
             Class<?>[] interfaces = instance.getClass().getInterfaces();
             for (Class<?> anInterface : interfaces) {
-                if (anInterface.equals(SimpleJob.class)) {
-                    ElasticSimpleJob annotation = instance.getClass().getAnnotation(ElasticSimpleJob.class);
+                if (anInterface.equals(DataflowJob.class)) {
+                    ElasticDataflowJob annotation = instance.getClass().getAnnotation(ElasticDataflowJob.class);
                     JobCoreConfiguration jcc = JobCoreConfiguration.newBuilder(annotation.jobName(),
                             annotation.corn(), annotation.shardingTotalCount()).build();
-                    SimpleJobConfiguration sjc = new SimpleJobConfiguration(jcc,
-                            instance.getClass().getCanonicalName());
-                    LiteJobConfiguration ljc = LiteJobConfiguration.newBuilder(sjc).overwrite(annotation.overwire())
+                    DataflowJobConfiguration djc = new DataflowJobConfiguration(jcc,
+                            instance.getClass().getCanonicalName(), annotation.streamingProcess());
+                    LiteJobConfiguration ljc = LiteJobConfiguration.newBuilder(djc).overwrite(annotation.overwire())
                             .build();
                     new SpringJobScheduler((ElasticJob) instance, coordinatorRegistryCenter, ljc).init();
                 }
